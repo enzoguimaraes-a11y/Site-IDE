@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDE — Compartilhe o Evangelho</title>
+  <meta name="description" content="Aplicativo prático para ajudar cristãos a compartilhar a mensagem de Jesus Cristo com amor, respeito e sabedoria bíblica.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Outfit:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO / NAVBAR -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="brand-logo" onclick="switchTab('inicio')">
+        <div class="logo-icon-wrapper">
+          <svg class="app-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- Cruz estilizada e coração -->
+            <path d="M12 2v20M7 7h10"/>
+            <circle cx="12" cy="12" r="9" stroke-opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">IDE</span>
+          <span class="brand-subtitle">Compartilhe o Evangelho</span>
+        </div>
+      </div>
+
+      <!-- Navegação Desktop -->
+      <nav class="desktop-nav" aria-label="Navegação Principal">
+        <button class="nav-btn active" data-tab="inicio" onclick="switchTab('inicio')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Início
+        </button>
+        <button class="nav-btn" data-tab="guia" onclick="switchTab('guia')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Como Compartilhar
+        </button>
+        <button class="nav-btn" data-tab="gerador" onclick="switchTab('gerador')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-3-3-3 3"/><path d="m15 9 3-3 3 3"/><path d="M21 12H3"/><path d="m3 9 3-3 3 3"/><path d="m9 15-3 3-3-3"/></svg>
+          Gerador de Mensagens
+        </button>
+        <button class="nav-btn" data-tab="versiculos" onclick="switchTab('versiculos')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
+          Versículos
+        </button>
+        <button class="nav-btn" data-tab="planejador" onclick="switchTab('planejador')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+          Ações
+        </button>
+        <button class="nav-btn" data-tab="oracao" onclick="switchTab('oracao')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Diário de Oração
+        </button>
+        <button class="nav-btn" data-tab="progresso" onclick="switchTab('progresso')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          Meu Progresso
+        </button>
+      </nav>
+
+      <!-- Botão Menu Mobile -->
+      <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" onclick="toggleMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Gaveta de Navegação Mobile -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-nav-links">
+        <button class="mobile-nav-item active" onclick="switchTab('inicio')">Início</button>
+        <button class="mobile-nav-item" onclick="switchTab('guia')">Como Compartilhar</button>
+        <button class="mobile-nav-item" onclick="switchTab('gerador')">Gerador de Mensagens</button>
+        <button class="mobile-nav-item" onclick="switchTab('versiculos')">Biblioteca de Versículos</button>
+        <button class="mobile-nav-item" onclick="switchTab('planejador')">Planejador de Evangelização</button>
+        <button class="mobile-nav-item" onclick="switchTab('oracao')">Diário de Oração</button>
+        <button class="mobile-nav-item" onclick="switchTab('progresso')">Meu Progresso</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL (SEÇÕES/ABAS) -->
+  <main class="main-content" id="appMain">
+
+    <!-- 1. PÁGINA INICIAL / DASHBOARD -->
+    <section id="tab-inicio" class="app-tab active">
+      <!-- Hero Principal -->
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            A Grande Comissão — Mateus 28:19-20
+          </div>
+          <h1 class="hero-title">IDE — Compartilhe o Evangelho</h1>
+          <p class="hero-tagline">“Uma mensagem de esperança pode transformar uma vida.”</p>
+          <p class="hero-description">
+            Seja bem-vindo ao <strong>IDE</strong>. Esta ferramenta foi criada para capacitar você a falar de Jesus Cristo
+            com clareza, empatia, respeito e fundamentação bíblica. Aqui você encontra mensagens prontas, versículos essenciais,
+            roteiro de diálogo e organização para suas ações cristãs.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn btn-primary" onclick="switchTab('guia')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              Aprender a compartilhar o Evangelho
+            </button>
+            <button class="btn btn-gold" onclick="switchTab('gerador')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-3-3-3 3"/><path d="m15 9 3-3 3 3"/><path d="M21 12H3"/></svg>
+              Preparar mensagem
+            </button>
+            <button class="btn btn-outline" onclick="switchTab('versiculos')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              Explorar versículos
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual-art">
+          <div class="sacred-seal">
+            <svg viewBox="0 0 120 120" class="seal-svg">
+              <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2" fill="none" opacity="0.4"/>
+              <circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6"/>
+              <!-- Cruz Central -->
+              <path d="M60 25 L60 95" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M42 45 L78 45" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <!-- Resplendor / Raios Suaves -->
+              <circle cx="60" cy="60" r="8" fill="currentColor" opacity="0.2"/>
+            </svg>
+            <span class="seal-caption">Verdade • Amor • Graça</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Versículo do Dia -->
+      <div class="daily-verse-card">
+        <div class="card-header-flex">
+          <div class="card-title-group">
+            <span class="badge-gold">Versículo Bíblico do Dia</span>
+            <span class="daily-date" id="dailyDateText">Hoje</span>
+          </div>
+          <button class="btn-text-action" onclick="refreshDailyVerse()" title="Sortear outro versículo edificante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Outro versículo
+          </button>
+        </div>
+        <blockquote class="daily-verse-quote" id="dailyVerseQuote">
+          “Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.”
+        </blockquote>
+        <div class="daily-verse-footer">
+          <div class="verse-reference" id="dailyVerseRef">João 3:16</div>
+          <div class="daily-verse-actions">
+            <button class="btn btn-sm btn-outline" onclick="copyDailyVerse()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copiar
+            </button>
+            <button class="btn btn-sm btn-outline" id="dailyVerseFavBtn" onclick="toggleFavoriteDailyVerse()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumo do Usuário (Cards Estatísticos Rápidos) -->
+      <div class="section-title-wrap">
+        <h2>Seu Painel de Atividades</h2>
+        <p>Resumo rápido das suas mensagens, versículos salvos e ações de evangelização cadastradas.</p>
+      </div>
+
+      <div class="summary-cards-grid">
+        <div class="summary-card" onclick="switchTab('gerador'); showSavedMessagesModal();">
+          <div class="summary-icon icon-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="summary-info">
+            <span class="summary-number" id="dashFavMessagesCount">0</span>
+            <span class="summary-label">Mensagens Salvas</span>
+          </div>
+        </div>
+
+        <div class="summary-card" onclick="switchTab('versiculos'); filterOnlyFavoritesVerses();">
+          <div class="summary-icon icon-gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="summary-info">
+            <span class="summary-number" id="dashFavVersesCount">0</span>
+            <span class="summary-label">Versículos Favoritos</span>
+          </div>
+        </div>
+
+        <div class="summary-card" onclick="switchTab('planejador')">
+          <div class="summary-icon icon-navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="summary-info">
+            <span class="summary-number" id="dashPlannedActionsCount">0</span>
+            <span class="summary-label">Ações Planejadas</span>
+          </div>
+        </div>
+
+        <div class="summary-card" onclick="switchTab('planejador')">
+          <div class="summary-icon icon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="summary-info">
+            <span class="summary-number" id="dashCompletedActionsCount">0</span>
+            <span class="summary-label">Ações Concluídas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Princípios de Ouro da Evangelização Cristã -->
+      <div class="golden-banner">
+        <div class="golden-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </div>
+        <div class="golden-text">
+          <h3>Como compartilhar o Evangelho com sabedoria</h3>
+          <p>
+            Evangelizar é semear esperança com amor sincero. Nunca pressione ou force ninguém. Respeite sempre o tempo e as escolhas de cada pessoa. Como escreveu Pedro: <em>“Antes, santificai a Cristo, como Senhor, em vossos corações; e estai sempre preparados para responder com mansidão e temor a qualquer que vos pedir a razão da esperança que há em vós”</em> (1 Pedro 3:15).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. APRENDA A COMPARTILHAR O EVANGELHO (GUIA EDUCATIVO) -->
+    <section id="tab-guia" class="app-tab">
+      <div class="page-header">
+        <span class="category-badge">Guia Educativo Passo a Passo</span>
+        <h1 class="page-title">Como Apresentar a Mensagem Cristã</h1>
+        <p class="page-subtitle">Um roteiro prático e bíblico em 5 etapas para explicar o Evangelho de forma simples, amorosa e respeitosa.</p>
+      </div>
+
+      <!-- Navegação rápida das etapas -->
+      <div class="steps-nav-pill">
+        <button class="step-pill-btn active" onclick="jumpToStep('step-1')">1. O Amor de Deus</button>
+        <button class="step-pill-btn" onclick="jumpToStep('step-2')">2. O Problema do Pecado</button>
+        <button class="step-pill-btn" onclick="jumpToStep('step-3')">3. Jesus Cristo</button>
+        <button class="step-pill-btn" onclick="jumpToStep('step-4')">4. A Resposta da Fé</button>
+        <button class="step-pill-btn" onclick="jumpToStep('step-5')">5. A Vida Cristã</button>
+      </div>
+
+      <!-- Etapas detalhadas em cards modernos -->
+      <div class="guide-steps-container">
+
+        <!-- ETAPA 1 -->
+        <article class="guide-step-card" id="step-1">
+          <div class="step-number-badge">Etapa 01</div>
+          <div class="step-card-body">
+            <h2 class="step-title">O Amor Incondicional de Deus</h2>
+            <div class="step-verse-box">
+              <span class="verse-reference-label">Passagem Central: João 3:16</span>
+              <p>“Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.”</p>
+            </div>
+            
+            <div class="step-content-block">
+              <h3>A Explicação do Conceito</h3>
+              <p>
+                Deus não nos criou por necessidade, mas por profundo amor. Ele deseja que cada pessoa conheça Sua paz e viva em comunhão com Ele. O amor de Deus não depende de méritos humanos; é uma dádiva que acolhe, restaura e dá sentido pleno à existência.
+              </p>
+            </div>
+
+            <div class="step-practical-grid">
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <strong>Como iniciar uma conversa:</strong>
+                </div>
+                <p>“Você já parou para pensar em qual é o propósito maior da nossa vida? Eu descobri que Deus se importa com cada detalhe da nossa história e nos ama de forma pessoal.”</p>
+              </div>
+
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <strong>Perguntas para reflexão mútua:</strong>
+                </div>
+                <p>“Quando as coisas ficam difíceis, onde você costuma buscar forças ou esperança? Você já experimentou a sensação de ser amado por Deus?”</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ETAPA 2 -->
+        <article class="guide-step-card" id="step-2">
+          <div class="step-number-badge">Etapa 02</div>
+          <div class="step-card-body">
+            <h2 class="step-title">O Problema do Pecado e a Fragilidade Humana</h2>
+            <div class="step-verse-box">
+              <span class="verse-reference-label">Passagem Central: Romanos 3:23</span>
+              <p>“Porque todos pecaram e destituídos estão da glória de Deus.”</p>
+            </div>
+            
+            <div class="step-content-block">
+              <h3>A Explicação do Conceito (Com Respeito e Empatia)</h3>
+              <p>
+                A Bíblia usa a palavra pecado não para acusar ou humilhar, mas como diagnóstico sincero: todos nós erramos, falhamos em amar plenamente e nos afastamos do padrão de justiça de Deus. Esse distanciamento gera vazio interior, culpa e separação espiritual. Reconhecer nossa fragilidade não é sinal de fraqueza, mas de humildade e honestidade.
+              </p>
+            </div>
+
+            <div class="step-practical-grid">
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <strong>Como iniciar uma conversa:</strong>
+                </div>
+                <p>“É impressionante como todos nós sentimos que o mundo está ferido e que nós mesmos muitas vezes erramos tentando acertar. A Bíblia chama essa nossa limitação de pecado, e todos nós precisamos de perdão.”</p>
+              </div>
+
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <strong>Perguntas para reflexão mútua:</strong>
+                </div>
+                <p>“Você já sentiu o peso de um erro ou a necessidade de recomeçar do zero com o coração leve e limpo?”</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ETAPA 3 -->
+        <article class="guide-step-card" id="step-3">
+          <div class="step-number-badge">Etapa 03</div>
+          <div class="step-card-body">
+            <h2 class="step-title">Jesus Cristo: O Caminho e o Resgate</h2>
+            <div class="step-verse-box">
+              <span class="verse-reference-label">Passagens Centrais: Romanos 5:8 & 1 Coríntios 15:3-4</span>
+              <p>“Mas Deus prova o seu amor para conosco em que Cristo morreu por nós, sendo nós ainda pecadores.”</p>
+              <p style="margin-top: 0.5rem; font-style: italic;">“Cristo morreu pelos nossos pecados, segundo as Escrituras, e foi sepultado, e ressuscitou ao terceiro dia.”</p>
+            </div>
+            
+            <div class="step-content-block">
+              <h3>A Explicação do Conceito</h3>
+              <p>
+                Como os seres humanos não conseguem alcançar a perfeição por seus próprios méritos, o próprio Deus veio ao nosso encontro na pessoa de Jesus Cristo. Na cruz, Jesus assumiu o peso dos nossos pecados por puro amor. Ele não permaneceu na sepultura: ressuscitou, venceu a morte e abriu o caminho definitivo para reconciliação com o Pai e vida eterna.
+              </p>
+            </div>
+
+            <div class="step-practical-grid">
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <strong>Como iniciar uma conversa:</strong>
+                </div>
+                <p>“O cristianismo não é sobre regras para tentar agradar a Deus, mas sobre o que Jesus já fez por nós na cruz: Ele pagou nossa dívida e nos ofereceu graça de graça.”</p>
+              </div>
+
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <strong>Perguntas para reflexão mútua:</strong>
+                </div>
+                <p>“Para você, quem foi Jesus Cristo? Você sabia que Ele deu a vida especificamente para que pudéssemos ter paz com Deus?”</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ETAPA 4 -->
+        <article class="guide-step-card" id="step-4">
+          <div class="step-number-badge">Etapa 04</div>
+          <div class="step-card-body">
+            <h2 class="step-title">A Resposta ao Evangelho: Fé e Decisão Pessoal</h2>
+            <div class="step-verse-box">
+              <span class="verse-reference-label">Passagens Centrais: Romanos 10:9 & Marcos 1:15</span>
+              <p>“A saber: Se, com a tua boca, confessares ao Senhor Jesus e, em teu coração, creres que Deus o ressuscitou dos mortos, serás salvo.”</p>
+            </div>
+            
+            <div class="step-content-block">
+              <h3>A Explicação do Conceito</h3>
+              <p>
+                A salvação é um presente gratuito de Deus, mas requer uma resposta voluntária. Essa resposta envolve dois passos: <strong>arrependimento</strong> (reconhecer os erros e mudar a direção de vida) e <strong>fé</strong> (confiar plenamente em Jesus como Salvador e Senhor). Ninguém é obrigado; é uma decisão pessoal nascida no coração.
+              </p>
+            </div>
+
+            <div class="step-practical-grid">
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <strong>Como fazer um convite carinhoso:</strong>
+                </div>
+                <p>“Se você sentir esse desejo no coração, pode falar com Deus em oração agora mesmo, pedindo perdão e entregando sua vida aos cuidados de Jesus.”</p>
+              </div>
+
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <strong>Perguntas para reflexão mútua:</strong>
+                </div>
+                <p>“O que você acha dessa mensagem? Você gostaria de orar comigo ou tem alguma dúvida sobre o que conversamos?”</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ETAPA 5 -->
+        <article class="guide-step-card" id="step-5">
+          <div class="step-number-badge">Etapa 05</div>
+          <div class="step-card-body">
+            <h2 class="step-title">A Nova Vida Cristã: Crescimento e Comunhão</h2>
+            <div class="step-verse-box">
+              <span class="verse-reference-label">Passagens Centrais: João 13:34-35 & Filipenses 4:6-7</span>
+              <p>“Um novo mandamento vos dou: Que vos ameis uns aos outros; como eu vos amei a vós, que também vós uns aos outros vos ameis.”</p>
+            </div>
+            
+            <div class="step-content-block">
+              <h3>A Explicação do Conceito</h3>
+              <p>
+                Entregar a vida a Jesus não é o fim, mas o início de uma caminhada transformadora. A vida cristã se desenvolve em quatro pilares fundamentais:
+                <strong>1) Amor prático ao próximo</strong> através de boas obras e empatia;
+                <strong>2) Vida de oração</strong> diária em intimidade com o Pai;
+                <strong>3) Comunhão</strong> com outros irmãos em uma igreja local;
+                <strong>4) Estudo da Bíblia</strong> para guiar decisões com sabedoria.
+              </p>
+            </div>
+
+            <div class="step-practical-grid">
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <strong>Como acolher o novo irmão:</strong>
+                </div>
+                <p>“Estou à disposição para estudarmos a Bíblia juntos e te acompanhar. Seria uma honra orar com você e te convidar para conhecer nossa comunidade de fé.”</p>
+              </div>
+
+              <div class="practical-box">
+                <div class="box-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <strong>Perguntas para reflexão mútua:</strong>
+                </div>
+                <p>“Que tal lermos juntos o Evangelho de João? Ele mostra de perto a vida, os milagres e o coração amoroso de Jesus.”</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Manual da Evangelização Ética e Respeitosa -->
+      <div class="respect-guidelines-card">
+        <div class="guidelines-header">
+          <div class="guidelines-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h3>Manual da Evangelização com Respeito e Amor</h3>
+            <p>Diretrizes éticas e espirituais para ser um embaixador de Cristo sem ferir ou constranger:</p>
+          </div>
+        </div>
+        <div class="guidelines-list">
+          <div class="guideline-item">
+            <span class="guide-num">1</span>
+            <div class="guide-detail">
+              <strong>Escuta Atenta:</strong> Ouça mais do que fala. Conheça as dores e a história da pessoa antes de dar respostas prontas (Tiago 1:19).
+            </div>
+          </div>
+          <div class="guideline-item">
+            <span class="guide-num">2</span>
+            <div class="guide-detail">
+              <strong>Respeito ao Livre-Arbítrio:</strong> Se a pessoa demonstrar desconforto ou pedir para não falar de fé, agradeça a conversa com carinho e mude de assunto. Jamais insista ou debata.
+            </div>
+          </div>
+          <div class="guideline-item">
+            <span class="guide-num">3</span>
+            <div class="guide-detail">
+              <strong>Sem Julgamentos ou Ameaças:</strong> O Evangelho é Boa Nova, não ameaça de condenação ou medo. Fale da graça e da esperança em Jesus.
+            </div>
+          </div>
+          <div class="guideline-item">
+            <span class="guide-num">4</span>
+            <div class="guide-detail">
+              <strong>Humildade:</strong> Não nos posicionamos como superiores moralmente, mas como pessoas imperfeitas alcançadas pela misericórdia de Deus.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. GERADOR DE MENSAGENS EVANGELÍSTICAS -->
+    <section id="tab-gerador" class="app-tab">
+      <div class="page-header">
+        <span class="category-badge">Ferramenta Prática</span>
+        <h1 class="page-title">Gerador de Mensagens Evangelísticas</h1>
+        <p class="page-subtitle">Escolha o público ou situação para gerar mensagens cristãs edificantes, com versículos bíblicos e dicas de envio.</p>
+      </div>
+
+      <div class="generator-container">
+        <!-- Painel de Seleção de Categoria -->
+        <div class="generator-controls-card">
+          <label for="messageCategorySelect" class="control-label">
+            <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Selecione a Categoria da Mensagem:
+          </label>
+          <div class="custom-select-wrap">
+            <select id="messageCategorySelect" class="form-select" onchange="onCategoryChange()">
+              <option value="amigos">🤝 Evangelização de amigos</option>
+              <option value="jovens">🎒 Mensagens para jovens</option>
+              <option value="esperanca">🌱 Mensagens de esperança</option>
+              <option value="amor_deus">❤️ Mensagens sobre o amor de Deus</option>
+              <option value="salvacao">✝️ Mensagens sobre Jesus e a salvação</option>
+              <option value="redes_sociais">📱 Mensagens para redes sociais</option>
+              <option value="convite_igreja">⛪ Mensagens para convidar alguém à igreja</option>
+            </select>
+          </div>
+
+          <div class="generator-buttons-row">
+            <button class="btn btn-primary btn-lg" onclick="generateMessage()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-3-3-3 3"/><path d="m15 9 3-3 3 3"/><path d="M21 12H3"/><path d="m3 9 3-3 3 3"/><path d="m9 15-3 3-3-3"/></svg>
+              Gerar Mensagem
+            </button>
+            <button class="btn btn-outline" onclick="showSavedMessagesModal()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Ver Favoritas (<span id="savedMsgBadge">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <!-- Card da Mensagem Gerada -->
+        <div class="generated-message-card" id="generatedMessageCard">
+          <div class="generated-card-top">
+            <span class="badge-category-pill" id="genMsgCategoryBadge">🤝 Evangelização de amigos</span>
+            <div class="message-meta-actions">
+              <button class="icon-action-btn" id="genMsgFavBtn" onclick="toggleFavoriteGeneratedMessage()" title="Salvar mensagem nos favoritos">
+                <svg id="genMsgFavIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <h2 class="generated-msg-title" id="genMsgTitle">Título da Mensagem</h2>
+          
+          <div class="generated-msg-body" id="genMsgBody">
+            Texto da mensagem cristã preparada com carinho para alcançar corações com respeito e verdade.
+          </div>
+
+          <div class="generated-verse-quote-box">
+            <svg class="quote-watermark" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <p class="verse-quote-text" id="genMsgVerse">“Versículo bíblico relacionado.”</p>
+            <span class="verse-quote-ref" id="genMsgRef">— Referência Bíblica</span>
+          </div>
+
+          <div class="sharing-suggestion-box">
+            <div class="sharing-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <strong>Sugestão prática de como compartilhar:</strong>
+              <p id="genMsgSuggestion">Envie em uma conversa pessoal com afeto ou por mensagem de áudio.</p>
+            </div>
+          </div>
+
+          <!-- Ações da Mensagem -->
+          <div class="generated-card-actions">
+            <button class="btn btn-primary" onclick="copyGeneratedMessage()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copiar Texto Completo
+            </button>
+            <button class="btn btn-gold" onclick="shareOnWhatsApp()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8l-8 8"/><path d="M8 8h8v8"/></svg>
+              Compartilhar no WhatsApp
+            </button>
+            <button class="btn btn-outline" onclick="generateMessage()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Outra Opção
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BIBLIOTECA DE VERSÍCULOS BÍBLICOS -->
+    <section id="tab-versiculos" class="app-tab">
+      <div class="page-header">
+        <span class="category-badge">Palavra de Deus</span>
+        <h1 class="page-title">Biblioteca de Versículos para Evangelização</h1>
+        <p class="page-subtitle">Passagens fundamentais da Bíblia Sagrada organizadas por temas, com dicas de aplicação e busca rápida.</p>
+      </div>
+
+      <!-- Barra de Pesquisa e Filtros -->
+      <div class="verses-filter-toolbar">
+        <div class="search-box-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="verseSearchInput" class="search-input" placeholder="Pesquisar por versículo, texto, livro ou referência (ex: João, amor, salvação)..." oninput="filterVerses()">
+          <button class="clear-search-btn" id="clearSearchBtn" onclick="clearVerseSearch()" title="Limpar pesquisa">✕</button>
+        </div>
+
+        <div class="filter-actions-row">
+          <div class="verses-theme-chips" id="themeChipsContainer">
+            <!-- Gerado via JS para os temas -->
+          </div>
+          <button class="fav-filter-pill" id="favFilterBtn" onclick="toggleOnlyFavoritesFilter()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Apenas Favoritos
+          </button>
+        </div>
+      </div>
+
+      <!-- Indicador de Resultados -->
+      <div class="results-meta-bar">
+        <span>Exibindo <strong id="versesCountDisplay">0</strong> versículos</span>
+      </div>
+
+      <!-- Grade de Versículos -->
+      <div class="verses-grid" id="versesGrid">
+        <!-- Preenchido via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 5. PLANEJADOR DE EVANGELIZAÇÃO -->
+    <section id="tab-planejador" class="app-tab">
+      <div class="page-header">
+        <span class="category-badge">Organização Prática</span>
+        <h1 class="page-title">Planejador de Ações Evangelísticas</h1>
+        <p class="page-subtitle">Organize suas conversas, visitas, entregas de mensagens e ações comunitárias com amor e intencionalidade.</p>
+      </div>
+
+      <div class="planner-layout">
+        <!-- Formulário de Cadastro de Ação -->
+        <div class="planner-form-card">
+          <div class="card-form-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            <h2 id="plannerFormHeaderTitle">Nova Ação Evangelística</h2>
+          </div>
+
+          <form id="actionForm" onsubmit="handleSaveAction(event)">
+            <input type="hidden" id="actionId">
+
+            <div class="form-group">
+              <label for="actionName">Nome da Ação <span class="required">*</span></label>
+              <input type="text" id="actionName" class="form-input" placeholder="Ex: Conversar com colega de trabalho sobre a fé" required>
+            </div>
+
+            <div class="form-group">
+              <label for="actionGoal">Objetivo da Atividade <span class="required">*</span></label>
+              <textarea id="actionGoal" class="form-textarea" rows="2" placeholder="Ex: Ouvir seus desafios, demonstrar apoio e compartilhar uma mensagem de esperança" required></textarea>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="actionDate">Data Prevista <span class="required">*</span></label>
+                <input type="date" id="actionDate" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="actionLocation">Local ou Contexto <span class="required">*</span></label>
+                <input type="text" id="actionLocation" class="form-input" placeholder="Ex: Intervalo do almoço, Praça, Faculdade" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="actionNotes">Observações / Lembretes</label>
+              <textarea id="actionNotes" class="form-textarea" rows="2" placeholder="Ex: Levar um Novo Testamento de presente; orar antes do encontro"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="actionStatus">Status Inicial</label>
+              <select id="actionStatus" class="form-select">
+                <option value="planejada">📌 Planejada</option>
+                <option value="concluida">✅ Concluída</option>
+              </select>
+            </div>
+
+            <!-- Sugestões Rápidas de Ação -->
+            <div class="quick-templates-box">
+              <span class="quick-title">Sugestões rápidas (clique para preencher):</span>
+              <div class="quick-tags">
+                <button type="button" class="quick-tag-btn" onclick="fillActionTemplate('amigo')">+ Conversar com amigo</button>
+                <button type="button" class="quick-tag-btn" onclick="fillActionTemplate('jovens')">+ Grupo de jovens</button>
+                <button type="button" class="quick-tag-btn" onclick="fillActionTemplate('comunidade')">+ Ação comunitária</button>
+                <button type="button" class="quick-tag-btn" onclick="fillActionTemplate('redes')">+ Mensagem digital</button>
+              </div>
+            </div>
+
+            <div class="form-actions-bar">
+              <button type="submit" class="btn btn-primary" id="saveActionSubmitBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Salvar Ação
+              </button>
+              <button type="button" class="btn btn-outline" id="cancelActionEditBtn" onclick="resetActionForm()" style="display: none;">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de Ações Cadastradas -->
+        <div class="planner-list-container">
+          <div class="list-filters-header">
+            <h3>Minhas Ações</h3>
+            <div class="filter-tab-pills">
+              <button class="pill-btn active" id="actFilterAll" onclick="filterActionsList('todas')">Todas (<span id="countAllActions">0</span>)</button>
+              <button class="pill-btn" id="actFilterPlanned" onclick="filterActionsList('planejada')">Planejadas (<span id="countPlannedActions">0</span>)</button>
+              <button class="pill-btn" id="actFilterCompleted" onclick="filterActionsList('concluida')">Concluídas (<span id="countCompletedActions">0</span>)</button>
+            </div>
+          </div>
+
+          <div class="actions-list" id="actionsListContainer">
+            <!-- Injetado via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. DIÁRIO DE ORAÇÃO -->
+    <section id="tab-oracao" class="app-tab">
+      <div class="page-header">
+        <span class="category-badge">Vida Devocional</span>
+        <h1 class="page-title">Diário de Oração Evangelística</h1>
+        <p class="page-subtitle">A evangelização começa de joelhos. Registre motivos de oração por amigos, familiares e ações da igreja.</p>
+      </div>
+
+      <!-- Alerta de Privacidade -->
+      <div class="privacy-notice-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div>
+          <strong>Privacidade e Sigilo Garantidos:</strong>
+          <p>Seus pedidos de oração ficam gravados exclusivamente no navegador deste dispositivo (localStorage). Nenhuma informação é compartilhada com terceiros ou enviada a servidores.</p>
+        </div>
+      </div>
+
+      <div class="prayer-layout">
+        <!-- Formulário de Oração -->
+        <div class="prayer-form-card">
+          <div class="card-form-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <h2 id="prayerFormHeaderTitle">Novo Pedido de Oração</h2>
+          </div>
+
+          <form id="prayerForm" onsubmit="handleSavePrayer(event)">
+            <input type="hidden" id="prayerId">
+
+            <div class="form-group">
+              <label for="prayerTitle">Descrição ou Motivo <span class="required">*</span></label>
+              <input type="text" id="prayerTitle" class="form-input" placeholder="Ex: Pela vida e saúde da família do Marcos" required>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="prayerDate">Data do Registro <span class="required">*</span></label>
+                <input type="date" id="prayerDate" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="prayerStatus">Status</label>
+                <select id="prayerStatus" class="form-select">
+                  <option value="em_oracao">🙏 Em Oração</option>
+                  <option value="respondida">✨ Oração Respondida / Graça Alcançada</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="prayerNotes">Observações / Detalhes</label>
+              <textarea id="prayerNotes" class="form-textarea" rows="3" placeholder="Ex: Pedir sabedoria para conversar com ele e que Deus conforte seu coração."></textarea>
+            </div>
+
+            <div class="form-actions-bar">
+              <button type="submit" class="btn btn-primary" id="savePrayerSubmitBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/></svg>
+                Salvar Pedido
+              </button>
+              <button type="button" class="btn btn-outline" id="cancelPrayerEditBtn" onclick="resetPrayerForm()" style="display: none;">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de Pedidos -->
+        <div class="prayer-list-container">
+          <div class="list-filters-header">
+            <h3>Pedidos Cadastrados</h3>
+            <div class="filter-tab-pills">
+              <button class="pill-btn active" id="prayerFilterAll" onclick="filterPrayersList('todos')">Todos (<span id="countAllPrayers">0</span>)</button>
+              <button class="pill-btn" id="prayerFilterActive" onclick="filterPrayersList('em_oracao')">Em Oração (<span id="countActivePrayers">0</span>)</button>
+              <button class="pill-btn" id="prayerFilterAnswered" onclick="filterPrayersList('respondida')">Respondidos (<span id="countAnsweredPrayers">0</span>)</button>
+            </div>
+          </div>
+
+          <div class="prayer-list" id="prayerListContainer">
+            <!-- Injetado via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. MEU PROGRESSO -->
+    <section id="tab-progresso" class="app-tab">
+      <div class="page-header">
+        <span class="category-badge">Acompanhamento Cristão</span>
+        <h1 class="page-title">Meu Progresso no IDE</h1>
+        <p class="page-subtitle">Acompanhe com gratidão sua dedicação à proclamação do Evangelho, sem comparações ou disputas.</p>
+      </div>
+
+      <!-- Banner Inspirador -->
+      <div class="encouragement-banner">
+        <div class="encouragement-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="encouragement-text">
+          <h3 id="progressEncouragementTitle">“Fiel é o que vos chama, o qual também o fará.”</h3>
+          <p id="progressEncouragementText">Cada conversa, oração e mensagem compartilhada é uma semente de amor que Deus pode fazer florescer no tempo certo.</p>
+        </div>
+      </div>
+
+      <!-- Métricas -->
+      <div class="progress-stats-grid">
+        <div class="progress-card">
+          <div class="progress-card-icon icon-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-3-3-3 3"/><path d="m15 9 3-3 3 3"/><path d="M21 12H3"/></svg>
+          </div>
+          <div class="progress-card-value" id="statGenMessagesCount">0</div>
+          <div class="progress-card-label">Mensagens Geradas</div>
+          <div class="progress-card-hint">Mensagens preparadas para compartilhar</div>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-card-icon icon-gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="progress-card-value" id="statFavVersesCount">0</div>
+          <div class="progress-card-label">Versículos Favoritados</div>
+          <div class="progress-card-hint">Passagens bíblicas memorizadas e guardadas</div>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-card-icon icon-navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="progress-card-value" id="statPlannedActionsCount">0</div>
+          <div class="progress-card-label">Ações Planejadas</div>
+          <div class="progress-card-hint">Iniciativas evangelísticas agendadas</div>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-card-icon icon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="progress-card-value" id="statCompletedActionsCount">0</div>
+          <div class="progress-card-label">Ações Concluídas</div>
+          <div class="progress-card-hint">Etapas evangelísticas realizadas</div>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-card-icon icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="progress-card-value" id="statPrayersCount">0</div>
+          <div class="progress-card-label">Pedidos de Oração</div>
+          <div class="progress-card-hint"><span id="statAnsweredPrayersCount">0</span> respondidos com gratidão</div>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-card-icon icon-gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="progress-card-value" id="statSavedMessagesCount">0</div>
+          <div class="progress-card-label">Mensagens Favoritas</div>
+          <div class="progress-card-hint">Mensagens salvas para uso contínuo</div>
+        </div>
+      </div>
+
+      <!-- Linha do Tempo de Atividades Recentes -->
+      <div class="recent-activities-card">
+        <div class="card-header-flex">
+          <h3>Atividades Recentes</h3>
+          <button class="btn-text-action" onclick="clearActivityHistory()">Limpar Histórico</button>
+        </div>
+        <div class="activity-timeline" id="activityTimelineContainer">
+          <!-- Injetado via JS -->
+        </div>
+      </div>
+
+      <!-- Gerenciamento de Dados Locais (Backup e Restauração) -->
+      <div class="data-management-card">
+        <h3>Gerenciamento de Dados (Armazenamento Local)</h3>
+        <p>
+          Seus dados são salvos de forma 100% segura no seu navegador (localStorage). Você pode exportar um arquivo de backup para transferir para outro computador ou restaurar quando desejar.
+        </p>
+        <div class="data-buttons-row">
+          <button class="btn btn-outline" onclick="exportUserData()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar Backup (JSON)
+          </button>
+          
+          <label class="btn btn-outline" style="cursor: pointer;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Restaurar Backup
+            <input type="file" id="importBackupInput" accept=".json" onchange="importUserData(event)" style="display: none;">
+          </label>
+
+          <button class="btn btn-outline" onclick="loadSampleDataPrompt()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            Carregar Dados de Exemplo
+          </button>
+
+          <button class="btn btn-danger-outline" onclick="confirmResetAllData()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Limpar Todos os Dados
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <svg class="footer-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M7 7h10"/><circle cx="12" cy="12" r="9" stroke-opacity="0.3"/></svg>
+          <span>IDE — Compartilhe o Evangelho</span>
+        </div>
+        <p class="footer-text">
+          Um instrumento prático e edificante para apoiar a proclamação da Palavra de Deus com amor, sabedoria e responsabilidade.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Navegação Rápida</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="switchTab('inicio')">Página Inicial</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('guia')">Como Compartilhar</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('gerador')">Gerador de Mensagens</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('versiculos')">Biblioteca Bíblica</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('planejador')">Planejador de Ações</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('oracao')">Diário de Oração</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('progresso')">Meu Progresso</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Fundamentação Bíblica</h4>
+        <p class="footer-text">
+          <em>“Portanto, ide, ensinai todas as nações, batizando-as em nome do Pai, e do Filho, e do Espírito Santo; ensinando-as a guardar todas as coisas que eu vos tenho mandado.”</em>
+        </p>
+        <span class="footer-subref">Mateus 28:19-20</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 IDE — Compartilhe o Evangelho. Desenvolvido com HTML, CSS e JavaScript puro.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL DE MENSAGENS FAVORITAS -->
+  <div class="modal-overlay" id="favMessagesModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Mensagens Evangelísticas Salvas</h3>
+        <button class="modal-close-btn" onclick="closeSavedMessagesModal()">✕</button>
+      </div>
+      <div class="modal-body" id="favMessagesModalBody">
+        <!-- Injetado dinamicamente via JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeSavedMessagesModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER DE TOAST (NOTIFICAÇÕES FLUTUANTES) -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- SCRIPTS -->
+  <script src="script.js"></script>
+</body>
+</html>
